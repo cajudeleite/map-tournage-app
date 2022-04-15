@@ -3,7 +3,7 @@ import mapboxgl from '!mapbox-gl'; // eslint-disable-line import/no-webpack-load
 import axios from "axios";
 import '../styles.css';
 
-const Map = (annee) => {
+const Map = ({annee, arr, movieName, producerName, directorName}) => {
 
     mapboxgl.accessToken = 'pk.eyJ1IjoiY2xhaXJlMTIzNDU2NzgiLCJhIjoiY2wxeGNoZmduMDBsYTNpbXRvYWtmbXkzeiJ9.2_d4igbbYVzzjw3XZpp7DA';
 
@@ -14,20 +14,21 @@ const Map = (annee) => {
     const [zoom, setZoom] = useState(11.5);
 
     useEffect(() => {
-        if (map.current) return; // initialize map only once
         map.current = new mapboxgl.Map({
             container: mapContainer.current,
             style: 'mapbox://styles/mapbox/streets-v11',
             center: [lng, lat],
             zoom: zoom
         });
+        console.log('arr passed in post request:', annee);
+        console.log('arr passed in post request:', arr);
         map.current.on('load', async () => {
-            let response = await axios.get('http://localhost:8000/', {
+            let response = await axios.post('http://localhost:8000/', {
               "year": annee,
-              "ardt": "",
-              "nom_tournage" : "",
-              "nom_realisateur" : "",
-              "nom_producteur" : ""
+              "ardt": arr,
+              "nom_tournage" : movieName,
+              "nom_realisateur" : directorName,
+              "nom_producteur" : producerName
           });
 
             let tournageData = response.data;
@@ -36,15 +37,15 @@ const Map = (annee) => {
 
             let arrondData = arrond.data;
 
-            const arrMapbox = arrondData.features.map(arr => {
+            const arrMapbox = arrondData.features.map(arrondissement => {
                 return {
                       type: 'Feature',
                       'geometry': {
                         'type': 'Polygon',
-                        'coordinates': arr.geometry.coordinates
+                        'coordinates': arrondissement.geometry.coordinates
                       },
                       "properties": {
-                        "code_postal": arr.properties.c_arinsee,
+                        "code_postal": arrondissement.properties.c_arinsee,
                       }
                 };
               });
@@ -116,7 +117,7 @@ const Map = (annee) => {
                   });
             });
         });
-    }, []);
+    }, [annee, arr, movieName, producerName, directorName]);
 
     return (
         <div>
