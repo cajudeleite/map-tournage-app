@@ -12,7 +12,6 @@ const Select = ({setAnnee, setArr, setMovieName, setDirectorName, setProducerNam
   const [producerNameInputValue, setProducerNameInputValue] = useState('');
   const [directorNameInputValue, setDirectorNameInputValue] = useState('');
 
-
   const getAnneeArray = async () => {
     try {
       const response = await axios.get('http://localhost:8000/annee');
@@ -37,7 +36,7 @@ const Select = ({setAnnee, setArr, setMovieName, setDirectorName, setProducerNam
   }, [])
 
   return (
-    <div className="select">
+    <div class="select">
       <form action="" onSubmit={(event) => {
         event.preventDefault();
         setAnnee(anneeSelect);
@@ -47,21 +46,21 @@ const Select = ({setAnnee, setArr, setMovieName, setDirectorName, setProducerNam
         setProducerName(producerNameInputValue)
       }}>
         <select onChange={(event) => setAnneeSelect(event.target.value)} style={{ width: '190px' }}>
-          <option value="" >--sélectionnez une année--</option>
+          <option value="" >--Année--</option>
           {anneeArray.map((a) => (
             <option key={a.annee_tournage} name={a.annee_tournage} value={a.annee_tournage}>{a.annee_tournage}</option>
           ))}
         </select>
         <select onChange={(event) => setArrSelect(event.target.value)} style={{ width: '210px' }}>
-          <option value="">--sélectionnez un code postal--</option>
+          <option value="">--Code postal--</option>
           {console.log('arrondissement array:', arrArray)}
           {arrArray.map((a) => (
             <option name={a.ardt_lieu} value={a.ardt_lieu}>{a.ardt_lieu}</option>
           ))}
         </select>
-        <input placeholder="Tapez le nom du film..." value={movieNameInputValue} onChange={(event) => setMovieNameInputValue(event.target.value)} style={{ width: '210px' }} />
-        <input placeholder="Tapez le nom du réalisateur..." value={directorNameInputValue} onChange={(event) => setDirectorNameInputValue(event.target.value)} style={{ width: '210px' }} />
-        <input placeholder="Tapez le nom du producteur..." value={producerNameInputValue} onChange={(event) => setProducerNameInputValue(event.target.value)} style={{ width: '210px' }} />
+        <input placeholder="Nom du film ou de la série..." value={movieNameInputValue} onChange={(event) => setMovieNameInputValue(event.target.value)} style={{ width: '210px' }} />
+        <input placeholder="Nom du réalisateur..." value={directorNameInputValue} onChange={(event) => setDirectorNameInputValue(event.target.value)} style={{ width: '210px' }} />
+        <input placeholder="Nom du producteur..." value={producerNameInputValue} onChange={(event) => setProducerNameInputValue(event.target.value)} style={{ width: '210px' }} />
         <button type="submit">Enregistrer</button>
       </form>
     </div>
