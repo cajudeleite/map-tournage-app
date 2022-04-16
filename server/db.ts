@@ -1,22 +1,9 @@
 const mysql = require('mysql2');
-
-// export const ConnectDb = async () => {
-//   try {
-//     const db = await mysql.createConnection({
-//       host: "localhost",
-//       user: "root",
-//       password: "hxhunter",
-//       database: "tournage"
-//     });
-//   } catch (error) {
-//     console.log(error);
-//     process.exit(1);
-//   }
-// }
+require('dotenv').config()
 
 export const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "hxhunter",
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
   database: "tournages"
 });

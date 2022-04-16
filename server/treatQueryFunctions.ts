@@ -23,6 +23,6 @@ export async function getMapBoxPoints(query:string){
 }
 
 export async function getDatabaseResults(query:string){
-  const Results = await db.promise().query(query);
-  return Results[0];
+  const results = await db.promise().query(query);
+  return results[0];
 }

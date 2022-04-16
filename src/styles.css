@@ -34,7 +34,6 @@ form {
   border-radius: 5px;
   width: fit-content;
   background-color:rgb(241, 237, 240) ;
-  /* box-shadow: 1px 1px 1x 1px #adacac */
 }
 
 select {
@@ -95,5 +94,4 @@ button:hover {
   background: rgb(67, 12, 91);
   color   : #FFF;
   box-shadow: 1px 10px 20px rgb(208, 205, 205);
-
 }

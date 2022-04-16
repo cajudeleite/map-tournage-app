@@ -9,7 +9,7 @@ var app = express();
 
 app.use(cors());
 
-//body-parser
+// body-parser
 const jsonParser = bodyParser.json();
 const urlencodedParser = bodyParser.urlencoded({ extended: true });
 app.use(jsonParser);
@@ -24,7 +24,7 @@ app.get('/arrondissements', async function(req:any , res:any){
 app.get('/annee', async function(req:any , res:any){
   let query = `SELECT annee_tournage FROM tournageData GROUP BY annee_tournage ORDER BY annee_tournage;`
   const years = await getDatabaseResults(query);
-  await res.send(years)
+  await res.send(years);
 });
 
 app.get('/', async function (req:any , res:any) {
@@ -38,28 +38,28 @@ app.get('/arrondissements-limits', async function (req:any , res:any) {
 });
 
 app.post('/', async function (req:any , res:any){
-  let yearQuery:string = ` IS NOT NULL`
+  let yearQuery:string = ` IS NOT NULL`;
   if (req.body.year != "") {
-    yearQuery = `=${req.body.year}`
+    yearQuery = `=${req.body.year}`;
   }
 
-  console.log("requete", req.body);
+  console.log("requete : ", req.body);
 
-  let ardtQuery:string = ` IS NOT NULL`
+  let ardtQuery:string = ` IS NOT NULL`;
   if (req.body.ardt != "") {
-    ardtQuery = `=${req.body.ardt}`
+    ardtQuery = `=${req.body.ardt}`;
   }
-  let MovieNameQuery:string = ` IS NOT NULL`
+  let MovieNameQuery:string = ` IS NOT NULL`;
   if (req.body.nom_tournage != "") {
-    MovieNameQuery = `="${req.body.nom_tournage}"`
+    MovieNameQuery = `="${req.body.nom_tournage}"`;
   }
-  let MovieDirectorNameQuery:string = ` IS NOT NULL`
+  let MovieDirectorNameQuery:string = ` IS NOT NULL`;
   if (req.body.nom_realisateur != "") {
-    MovieDirectorNameQuery = `="${req.body.nom_realisateur}"`
+    MovieDirectorNameQuery = `="${req.body.nom_realisateur}"`;
   }
-  let ProducerNameQuery:string = ` IS NOT NULL`
+  let ProducerNameQuery:string = ` IS NOT NULL`;
   if (req.body.nom_producteur != "") {
-    ProducerNameQuery = `="${req.body.nom_producteur}"`
+    ProducerNameQuery = `="${req.body.nom_producteur}"`;
   }
   const query =
     `SELECT * FROM tournageData
@@ -68,7 +68,7 @@ app.post('/', async function (req:any , res:any){
     AND nom_tournage${MovieNameQuery}
     AND nom_realisateur${MovieDirectorNameQuery}
     AND nom_producteur${ProducerNameQuery}
-    LIMIT 1000;`
+    LIMIT 1000;`;
 
   console.log(query);
   const tournagesMapbox = await getMapBoxPoints(query);
